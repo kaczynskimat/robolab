@@ -196,8 +196,6 @@ class Planet:
 
             for coord in self.unvisited:
                 path = self.shortest_path(coordinates, coord)
-                # if path == []:
-                #     return 'empty'
                 if path:
                     total = 0
                     for vertex in path:
@@ -228,17 +226,6 @@ class Planet:
             direction_to_take = self.visited[coordinates][0]
             return direction_to_take
 
-    # def remove_current_coord_unvisited(self, coordinates, unvisited: list):
-    #     """
-    #         takes current coordinates and the unvisited list
-    #         removes current_coord from list if it's in
-    #         returns unvisited list
-    #
-    #     """
-    #     temp = [x for x in unvisited if x != coordinates]
-    #     unvisited = temp
-    #     return unvisited
-
     def next_direction(self, target_message, coordinates):
         """
             takes target message and current coordinates
@@ -267,15 +254,9 @@ class Planet:
                 first_vertex, last_vertex, path_weight, path_status = path
                 if first_vertex[0] not in self.visited.keys() and first_vertex[0] not in self.unvisited:
                     self.unvisited.append(first_vertex[0])  # (StartX, StartY)
-                # elif path_weight != -1 and (first_vertex[0] in self.visited.keys() and first_vertex[1] not in self.visited[first_vertex[0]]):
-                    # self.visited[first_vertex[0]].append(first_vertex[1])
-                    # pass
-
                 if last_vertex[0] not in self.visited.keys() and last_vertex[0] not in self.unvisited:
                     self.unvisited.append(last_vertex[0])  # (EndX, EndY)
-                # elif path_weight != -1 and (last_vertex[0] in self.visited.keys() and last_vertex[1] not in self.visited[last_vertex[0]]):
-                #     pass
-                    # self.visited[last_vertex[0]].append(last_vertex[1])
+
                 self.add_path(first_vertex, last_vertex, path_weight)
 
         for path in unveiled_paths:
@@ -302,20 +283,6 @@ class Planet:
         self.unvisited.remove(current_coord)
         self.visited[current_coord] = outgoing_paths
 
-    # def remove_unveiled_paths(self, unveiled_paths) -> None:
-    #     """Removes unveiled paths by the server from the current vertex"""
-    #     for path in unveiled_paths:
-    #         start_vertex, end_vertex, path_weight, path_status = path
-    #         if start_vertex[0] in self.visited.keys():
-    #             for direction in self.visited[start_vertex[0]]:
-    #                 if direction in self.paths[start_vertex[0]].keys():
-    #                     self.visited[start_vertex[0]].remove(direction)
-    #         if end_vertex[0] in self.visited.keys():
-    #             print("in if statement, end_vertex:", end_vertex)
-    #             for direction in self.visited[end_vertex[0]]:
-    #                 print("in for loop, direction:", direction)
-    #                 if direction in self.paths[end_vertex[0]].keys():
-    #                     self.visited[end_vertex[0]].remove(direction)
 
     def remove_driven_paths(self, start_vertex: tuple[tuple[int, int], Direction], last_vertex: tuple[tuple[int, int], Direction]):
         """
